@@ -1,36 +1,41 @@
-const Post = require("../models/post")
-const { validationResult } = require("express-validator")
+const Post = require("../models/post");
+const { validationResult } = require("express-validator");
 
 exports.getPosts = async (req,res,next)=>{
         try{
-            const result = await Post.find();
-            res.status(200).json({
-                posts: result
-            })
+            const posts = await Post.find().select("_id title body");
+            return res.json({
+                posts
+            });
         }catch(error){
-            res.status(404).json({
-                error: error
-            })
+            return res.status(404).json({
+                error
+            });
         }
 }
 
 exports.createPost = async (req,res,next)=>{
     const {errors} = validationResult(req);
-    if(errors){
-        res.status(404).json({
-            error: errors[0]
-        })
+    if(errors.length>0){
+        return res.status(404).json({
+            error: errors[0].msg
+        });
     }else{
         const post = new Post(req.body);
         try{
             const result = await post.save();
-            res.status(200).json({
-                post: result
-            })
+            return res.json({
+                post: result,
+                message: "Post created successfully!"
+            });
         }catch(error){
-            res.status(404).json({
+            return res.status(404).json({
                 error: error
-            })
+            });
         }
     }
+}
+
+exports.updatePost = async(req,res,next)=>{
+    //  const {errors 
 }

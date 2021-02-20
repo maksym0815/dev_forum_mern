@@ -38,7 +38,3 @@ exports.createPost = async (req,res,next)=>{
         next(error);
     }
 }
-
-exports.updatePost = async(req,res,next)=>{
-    //  const {errors 
-}

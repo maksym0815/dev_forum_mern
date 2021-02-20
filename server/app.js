@@ -4,8 +4,9 @@ const bodyParser = require("body-parser");
 const cookieParser = require("cookie-parser");
 require('dotenv').config();
 const mongoose = require("mongoose");
-const postRoutes = require("./routes/post");
 const authRoutes = require("./routes/auth");
+const postRoutes = require("./routes/post");
+const userRoutes = require("./routes/user");
 const morgan = require("morgan");
 
 //Init App
@@ -22,8 +23,9 @@ app.use(morgan("dev"));
 
 //Routes
 
-app.use("/post", postRoutes);
 app.use("/auth", authRoutes);
+app.use("/", postRoutes);
+app.use("/", userRoutes);
 app.use("/", (req, res,next)=>{
     res.send("Forum API");
 });
@@ -31,11 +33,6 @@ app.use("/", (req, res,next)=>{
 //Error handling
 
 app.use((error, req,res,next)=>{
-    if(error.name === "UnauthorizedError"){
-        return res.status(401).json({
-            error: "Unauthorized!"
-        });
-    }
     const status = error.statusCode || 500;
     return res.status(status).json({
         error: error.data,

@@ -57,7 +57,7 @@ exports.login = async (req,res,next)=>{
                     email: user.email,
                     userId: user._id
                 }, process.env.JWT_SECRET, {expiresIn: "6h"});
-                res.cookie("token", token, {expire: new Date()+ 9999});
+                res.cookie("token", token, {expire: new Date()+ 21600});
                 return res.status(200).json({
                     user: {
                         _id: user._id,

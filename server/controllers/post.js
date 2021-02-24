@@ -108,6 +108,7 @@ exports.updatePost = async(req, res ,next)=>{
         }
         _.extend(post, req.body);
         post.image = image;
+        post.updatedAt = Date.now()
        const result = await post.save();
        res.status(200).json({
            message: "Post updated successfully!",
@@ -136,11 +137,12 @@ exports.deletePost = async (req, res, next)=>{
             error.data = "Not authorized!";
             throw error;
         }
-        clearImage(post.image);
+        if(post.image){
+            clearImage(post.image);
+        }
         await Post.findByIdAndDelete(req.params.postId);
         res.status(200).json({
-            message: "Post updated successfully!",
-            post: result
+            message: "Post deleted successfully!",
         });
     }catch(error){
         if(!error.statusCode){

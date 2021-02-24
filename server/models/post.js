@@ -16,7 +16,18 @@ const postSchema = new Schema({
         minlength: 5,
         maxlength: 2000
     },
-    date: {
+    image: {
+        type: String,
+    },
+    creator: {
+        type: Schema.Types.ObjectId,
+        ref: "User"
+    },
+    createdAt: {
+        type: Date,
+        default: Date.now
+    },
+    updatedAt: {
         type: Date,
         default: Date.now
     },

@@ -1,9 +1,13 @@
 import styles from "./App.module.scss"
+import MainRouter from "./MainRouter"
+import {BrowserRouter} from "react-router-dom"
 
 function App() {
   return (
     <div>
-      <h1>FORUM</h1>
+      <BrowserRouter>
+        <MainRouter/>
+      </BrowserRouter>
     </div>
   );
 }

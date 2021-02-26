@@ -2,9 +2,8 @@ const User = require("../models/user");
 const { validationResult } = require("express-validator");
 const bcrypt = require("bcrypt");
 const jwt = require("jsonwebtoken");
-const jwtExpress = require("express-jwt");
 
-exports.signup = async (req,res,next)=>{
+exports.register = async (req,res,next)=>{
     try{
         const {errors} = validationResult(req);
         if(errors.length>0){
@@ -29,7 +28,7 @@ exports.signup = async (req,res,next)=>{
         const result = await user.save();
         return res.json({
             userId: result._id,
-            message: "Signup successful!"
+            message: "Registered successfully!"
         });
     }catch(error){
         if(!error.statusCode){

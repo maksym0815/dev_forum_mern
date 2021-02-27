@@ -1,0 +1,37 @@
+@import "../../variables.scss";
+
+nav {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  height: 10vh;
+  .navLeft {
+    padding: 1.5rem;
+    a {
+      text-decoration: none;
+    }
+    .logo {
+      font-weight: 900;
+      font-size: 1.5rem;
+      color: $primary;
+      background: $white;
+      padding: 0.5rem;
+      max-height: 10vh;
+    }
+  }
+  .navRight {
+    padding: 1.5rem;
+    .link {
+      text-decoration: none;
+      color: $white;
+      margin: 0rem 1rem;
+      height: 100%;
+    }
+    .active {
+      text-decoration: none;
+      color: $secondary;
+      margin: 0rem 1rem;
+      height: 100%;
+    }
+  }
+}

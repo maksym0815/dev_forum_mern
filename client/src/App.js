@@ -1,14 +1,11 @@
-import styles from "./App.module.scss"
-import MainRouter from "./MainRouter"
-import {BrowserRouter} from "react-router-dom"
+import MainRouter from "./MainRouter";
+import {BrowserRouter as Router} from "react-router-dom";
 
-function App() {
+function App(props) {
   return (
-    <div>
-      <BrowserRouter>
+      <Router>
         <MainRouter/>
-      </BrowserRouter>
-    </div>
+      </Router>
   );
 }
 

@@ -1,15 +1,21 @@
 import React from "react";
-import {Switch, Route} from "react-router-dom";
+import {Switch, Route, withRouter} from "react-router-dom";
 import Home from "./pages/Home/Home"
-import Users from "./pages/Users/Users"
+import Register from "./pages/Register/Register"
+import Login from "./pages/Login/Login"
+import Nav from "./components/Nav/Nav"
 
-const MainRouter = ()=>{
+const MainRouter = (props)=>{
     return(
-        <Switch>
-            <Route exact path="/users" component={Users}/>
-            <Route exact path="/" component={Home}/>
-        </Switch>
+        <>
+            <Nav/>
+            <Switch>
+                <Route exact path="/login" component={Login}/>
+                <Route exact path="/register" component={Register}/>
+                <Route exact path="/" component={Home}/>
+            </Switch>
+        </>
     )
 }
 
-export default MainRouter;
+export default withRouter(MainRouter);

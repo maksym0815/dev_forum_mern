@@ -53,10 +53,8 @@ exports.login = async (req,res,next)=>{
             if(passwordMatches){
                 console.log(user)
                 const token = jwt.sign({
-                    email: user.email,
                     userId: user._id
                 }, process.env.JWT_SECRET, {expiresIn: "6h"});
-                res.cookie("token", token, {expire: new Date()+ 21600});
                 return res.status(200).json({
                     user: {
                         _id: user._id,
@@ -87,7 +85,6 @@ exports.login = async (req,res,next)=>{
 }
 
 exports.logout = (req,res,next)=>{
-    res.clearCookie("token")
     return res.json({
         message: "Successfully logged out!"
     })

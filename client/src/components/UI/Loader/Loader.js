@@ -1,10 +1,13 @@
 import styles from "./Loader.module.scss";
 
-function Loader() {
+function Loader(props) {
     return (
-        <div className={styles.loader}>
-            <div className={styles.dot}></div>
-        </div>
+        <>
+            {props.isLoading?
+            <div className={styles.loader}>
+                <div className={styles.dot}></div>
+            </div>:null}
+        </>
     );
   }
   

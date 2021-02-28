@@ -1,11 +1,13 @@
 import {useState} from "react";
+import {useDispatch} from "react-redux";
+import * as actions from "../../store/actions/UI";
 import styles from "./Register.module.scss";
 import {signup} from "../../api/auth";
 import Form from "../../components/Form/Form";
 import Status from "../../components/UI/Status/Status";
-import Loader from "../../components/UI/Loader/Loader";
 
 function Register() {
+    const dispatch = useDispatch();
 
     const [formData , setFormData] = useState({
       username: "",
@@ -17,8 +19,6 @@ function Register() {
       type: "", 
       message: ""
     });
-
-    const [loading, setLoading] = useState(false);
 
     const formChangeHandler = (e)=>{
       setFormData({
@@ -33,14 +33,14 @@ function Register() {
 
     const formSubmitHandler = (e)=>{
       e.preventDefault();
-      setLoading(true);
+      dispatch(actions.startLoading());
       signup(formData).then(response=>{
         if(response.error){
           setStatus({
             type: "warning",
             message: response.message
-          });
-          setLoading(false);
+          });        
+        dispatch(actions.endLoading());
         }else{
           setStatus({
             type: "success",
@@ -51,14 +51,13 @@ function Register() {
             email: "",
             password: ""
            });
-           setLoading(false);
+           dispatch(actions.endLoading());
         }
       })
     }
 
     return (
       <main>
-        {loading?<Loader/>:null}
         <div className={styles.Register}>
           <h3>Register</h3>
           <Status status={status}/>

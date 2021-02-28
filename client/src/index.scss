@@ -11,3 +11,50 @@ body {
   min-height: 100vh;
   font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
 }
+
+.box {
+  position: fixed;
+  z-index: -1;
+}
+
+.box1 {
+  width: 200px;
+  height: 200px;
+  top: 30%;
+  left: 10%;
+  transform: rotate(60deg);
+  animation: color 7s ease-in infinite alternate-reverse;
+}
+
+.box2 {
+  width: 350px;
+  height: 400px;
+  top: 75%;
+  left: 60%;
+  transform: rotate(-15deg);
+  animation: color 10s ease-in infinite;
+}
+
+.box3 {
+  width: 250px;
+  height: 250px;
+  top: -5%;
+  left: 75%;
+  transform: rotate(60deg);
+  animation: color 4s ease-in infinite reverse;
+}
+
+@keyframes color {
+  0% {
+    background: $primary;
+  }
+  40% {
+    background: $primary-light;
+  }
+  80% {
+    background: $primary-dark;
+  }
+  100% {
+    background: $primary;
+  }
+}

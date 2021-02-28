@@ -1,12 +1,14 @@
 import {useState} from "react";
+import {useDispatch} from "react-redux";
+import * as actions from "../../store/actions/UI";
 import styles from "./Login.module.scss";
 import {login} from "../../api/auth";
 import Form from "../../components/Form/Form";
 import Status from "../../components/UI/Status/Status";
-import Loader from "../../components/UI/Loader/Loader";
 import {withRouter} from "react-router-dom";
 
 function Login(props) {
+    const dispatch = useDispatch();
 
     const [formData , setFormData] = useState({
       email: "",
@@ -17,8 +19,6 @@ function Login(props) {
       type: "", 
       message: ""
     });
-    
-    const [loading, setLoading] = useState(false);
 
     const formChangeHandler = (e)=>{
       setFormData({
@@ -33,7 +33,7 @@ function Login(props) {
 
     const formSubmitHandler = (e)=>{
       e.preventDefault();
-      setLoading(true);
+      dispatch(actions.startLoading());
       login(formData).then(response=>{
         console.log(response)
         if(response.error){
@@ -41,7 +41,7 @@ function Login(props) {
             type: "warning",
             message: response.message
           });
-          setLoading(false);
+          dispatch(actions.endLoading());
         }else{
           setStatus({
             type: "success",
@@ -51,7 +51,7 @@ function Login(props) {
            ...response.user,
            token: response.token
           }))
-          setLoading(false);
+          dispatch(actions.endLoading());
           props.history.push("/");
         }
       })
@@ -59,7 +59,6 @@ function Login(props) {
 
     return (
       <main>
-        {loading?<Loader/>:null}
         <div className={styles.Register}>
           <h3>Login</h3>
           <Status status={status}/>

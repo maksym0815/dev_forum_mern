@@ -1,0 +1,37 @@
+@import "../../../variables.scss";
+
+.statusBox {
+  width: 100%;
+  min-height: 2.5rem;
+  margin: 0rem 0rem 1rem 0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  opacity: 0;
+  background: $primary;
+  color: $grey;
+  font-size: 0.9rem;
+  text-align: center;
+  position: relative;
+  transition: all 0.3s ease-in;
+  .errorLine {
+    position: absolute;
+    left: 0;
+    top: 0;
+    height: 100%;
+    width: 5px;
+    background: $warning;
+  }
+  .successLine {
+    position: absolute;
+    left: 0;
+    top: 0;
+    height: 100%;
+    width: 5px;
+    background: $success;
+  }
+}
+
+.visible {
+  opacity: 1 !important;
+}

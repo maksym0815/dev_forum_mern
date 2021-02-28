@@ -1,0 +1,50 @@
+@import "../../../variables.scss";
+
+.loader {
+  display: flex;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  z-index: 2;
+  background: rgba(255, 255, 255, 0.027);
+  padding: 10rem;
+  border-radius: 100%;
+  animation: grow 2s ease-in-out infinite;
+  .dot {
+    width: 50px;
+    height: 50px;
+    margin: 0 0.5rem;
+    animation: dot 1.2s ease-in-out infinite;
+  }
+}
+
+@keyframes dot {
+  0% {
+    background: $primary-light;
+    border-radius: 0%;
+    transform: rotate(0deg);
+  }
+  50% {
+    background: $secondary;
+    border-radius: 50%;
+    transform: rotate(180deg);
+  }
+  100% {
+    background: $primary-light;
+    border-radius: 0%;
+    transform: rotate(360deg);
+  }
+}
+
+@keyframes grow {
+  0% {
+    padding: 0rem;
+  }
+  50% {
+    padding: 10rem;
+  }
+  100% {
+    padding: 0rem;
+  }
+}

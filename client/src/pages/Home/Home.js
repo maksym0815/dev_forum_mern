@@ -1,5 +1,3 @@
-import Loader from "../../components/UI/Loader/Loader"
-
 function Home() {
   return (
     <main>

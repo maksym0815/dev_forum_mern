@@ -4,7 +4,7 @@ import Home from "./pages/Home/Home";
 import Register from "./pages/Register/Register";
 import Login from "./pages/Login/Login";
 import Nav from "./components/Nav/Nav";
-import Loader from "./components/UI/Loader/Loader";
+import {Loader} from "./components/UI/UI";
 import {useSelector} from "react-redux";
 
 const MainRouter = (props)=>{

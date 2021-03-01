@@ -4,7 +4,7 @@ import * as actions from "../../store/actions/UI";
 import styles from "./Login.module.scss";
 import {login} from "../../api/auth";
 import Form from "../../components/Form/Form";
-import Status from "../../components/UI/Status/Status";
+import {Status} from "../../components/UI/UI";
 import {withRouter} from "react-router-dom";
 
 function Login(props) {

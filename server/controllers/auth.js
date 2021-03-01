@@ -12,6 +12,12 @@ exports.register = async (req,res,next)=>{
             error.data = "Validation failed!";
             throw error;
         }
+        if(req.body.password!=req.body.confirmPassword){
+            const error = new Error("Passwords do not match!");
+            error.statusCode = 422;
+            error.data = "Passwords do not match!";
+            throw error;
+        }
         const doesUserExist = await User.find({email: req.body.email});
         if(doesUserExist.length>0){
             const error = new Error("User already exists!");
@@ -81,10 +87,4 @@ exports.login = async (req,res,next)=>{
         }
         next(error);
     }
-}
-
-exports.logout = (req,res,next)=>{
-    return res.json({
-        message: "Successfully logged out!"
-    })
 }

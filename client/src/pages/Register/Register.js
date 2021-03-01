@@ -4,7 +4,7 @@ import * as actions from "../../store/actions/UI";
 import styles from "./Register.module.scss";
 import {signup} from "../../api/auth";
 import Form from "../../components/Form/Form";
-import Status from "../../components/UI/Status/Status";
+import {Status} from "../../components/UI/UI";
 
 function Register() {
     const dispatch = useDispatch();
@@ -12,7 +12,8 @@ function Register() {
     const [formData , setFormData] = useState({
       username: "",
       email: "",
-      password: ""
+      password: "",
+      confirmPassword: ""
     });
 
     const [status, setStatus] = useState({
@@ -49,7 +50,8 @@ function Register() {
           setFormData({
             username: "",
             email: "",
-            password: ""
+            password: "",
+            confirmPassword: ""
            });
            dispatch(actions.endLoading());
         }

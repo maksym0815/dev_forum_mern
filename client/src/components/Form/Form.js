@@ -18,6 +18,11 @@ const Form = (props)=>{
                 <input type="password" name="password" id="password" value={props.formData.password}  onChange={e=> props.formChangeHandler(e)} placeholder="Password"/>
               </label>
             </div>
+            {props.formData.confirmPassword!=null?<div className="confirmPassword">
+              <label htmlFor="confirmPassword">
+              <input type="password" name="confirmPassword" id="confirmPassword" value={props.formData.confirmPassword}  onChange={e=> props.formChangeHandler(e)} placeholder="Confirm password"/>
+              </label>
+            </div>:null}
             <button type="submit">SUBMIT</button>
           </form>
     )

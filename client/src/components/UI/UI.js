@@ -1,4 +1,8 @@
+import {useDispatch} from "react-redux";
+import * as actions from "../../store/actions/UI"
 import styles from "./UI.module.scss";
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faTimes } from '@fortawesome/free-solid-svg-icons';
 
 export function Loader(props) {
     return (
@@ -18,4 +22,34 @@ export function Status(props) {
             {props.status.message}
         </div>
     );
+}
+
+export function ErrorModal(props){
+    const dispatch = useDispatch();
+
+    return (
+        <>
+            {props.errorOccured.flag?
+            <div className={styles.ErrorModal}>
+                <p>{props.errorOccured.message}</p>
+                <FontAwesomeIcon className={styles.icon} icon={faTimes} onClick={()=>dispatch(actions.stopError())}/>
+            </div>:null}
+        </>
+    )
+}
+
+export function Container(props){
+    return (
+        <div className={styles.Container}>
+            {props.children}
+        </div>
+    )
+}
+
+export function Button(props){
+    return (
+        <button className={props.type=="warning"?`${styles.btn} ${styles.btnWarning}`:`${styles.btn} ${styles.btnDanger}`}>
+            {props.children}
+        </button>
+    )
 }

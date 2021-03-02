@@ -59,7 +59,7 @@ function Register() {
     }
 
     return (
-      <main>
+      <main className={styles.main}>
         <div className={styles.Register}>
           <h3>Register</h3>
           <Status status={status}/>

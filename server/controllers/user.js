@@ -1,7 +1,7 @@
 const Users = require("../models/user");
 const _ = require("lodash")
 
-exports.getUsers = async(req,res)=>{
+exports.getUsers = async(req,res, next)=>{
     try{
         const users = await Users.find().select("_id email username")
         return res.json({
@@ -16,7 +16,7 @@ exports.getUsers = async(req,res)=>{
     }
 }
 
-exports.getUser = async(req,res)=>{
+exports.getUser = async(req,res, next)=>{
     try{
         const user = await Users.findById(req.params.userId).select("_id email username creationDate updatedDate")
         return res.json({

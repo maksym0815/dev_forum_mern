@@ -13,29 +13,60 @@ nav {
     .logo {
       font-weight: 900;
       font-size: 1.5rem;
-      color: $primary;
-      background: $white;
+      color: $white;
       padding: 0.5rem;
       max-height: 10vh;
     }
   }
   .navRight {
-    padding: 1.5rem;
+    display: flex;
     .link {
+      padding: 1.5rem;
+      width: 6rem;
+      text-align: center;
       text-decoration: none;
       color: $white;
-      margin: 0rem 1rem;
       height: 100%;
       transition: all 0.2s ease;
       &:hover {
         color: $grey;
       }
     }
+
     .active {
       text-decoration: none;
       color: $secondary;
-      margin: 0rem 1rem;
-      height: 100%;
+    }
+
+    .icon {
+      transform: translateY(10%);
+    }
+
+    .dropdownToggler {
+      cursor: pointer;
+    }
+
+    .dropdown {
+      background: $primary-dark;
+      border: 1px solid $grey;
+      padding: 1.5rem;
+      position: absolute;
+      top: 0%;
+      right: 0%;
+      z-index: 200;
+      transition: all 0.2s ease;
+    }
+
+    .dropdownClose {
+      opacity: 0;
+      transform: translate(100%, 100%);
+      pointer-events: none;
+    }
+
+    .dropdownOpen {
+      opacity: 1;
+      transform: translate(0%, 100%);
+      pointer-events: all;
     }
   }
 }

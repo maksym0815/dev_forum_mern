@@ -1,6 +1,6 @@
 @import "../../variables.scss";
 
-main {
+.main {
   display: flex;
   position: relative;
   justify-content: center;
@@ -11,7 +11,7 @@ main {
 .Register {
   margin: auto;
   width: 40%;
-  min-height: 70vh;
+  min-height: 35rem;
   padding: 2rem;
   display: flex;
   justify-content: center;

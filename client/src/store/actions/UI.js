@@ -11,3 +11,16 @@ export const endLoading = ()=>{
         type: actions.STOP_LOADING
     }
 }
+
+export const startError = (message)=>{
+    return {
+        type: actions.START_ERROR,
+        message: message
+    }
+}
+
+export const stopError = ()=>{
+    return {
+        type: actions.STOP_ERROR
+    }
+}

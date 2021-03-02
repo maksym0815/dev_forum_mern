@@ -79,7 +79,7 @@ app.use("/", (req, res,next)=>{
 app.use((error, req,res,next)=>{
     const status = error.statusCode || 500;
     return res.status(status).json({
-        error: error.data,
+        error: error.data || "An error occured",
         message: error.message
     });
 })

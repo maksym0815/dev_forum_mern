@@ -23,3 +23,11 @@ export const login = (data)=>{
     .then(data=> data.json())
     .catch(error=> console.log(error))
 }
+
+export const isLoggedIn = ()=>{
+    if(localStorage.getItem("user")){
+        return JSON.parse(localStorage.getItem("user"));
+    }else{
+        return false;
+    }
+}

@@ -35,7 +35,6 @@ function Login(props) {
       e.preventDefault();
       dispatch(actions.startLoading());
       login(formData).then(response=>{
-        console.log(response)
         if(response.error){
           setStatus({
             type: "warning",
@@ -58,8 +57,8 @@ function Login(props) {
     }
 
     return (
-      <main>
-        <div className={styles.Register}>
+      <main className={styles.main}>
+        <div className={styles.Login}>
           <h3>Login</h3>
           <Status status={status}/>
           <Form formSubmitHandler={formSubmitHandler} formChangeHandler={formChangeHandler} formData={formData}/>

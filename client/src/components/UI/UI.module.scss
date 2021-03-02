@@ -88,3 +88,56 @@
 .visible {
   opacity: 1 !important;
 }
+
+.ErrorModal {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 50%;
+  text-align: center;
+  background: $primary-light;
+  border: 1px solid $white;
+  padding: 4rem;
+  z-index: 80;
+  p {
+    color: $white;
+  }
+  .icon {
+    position: absolute;
+    top: 1.5rem;
+    right: 1rem;
+    transform: translate(0%, -50%);
+    color: $white;
+    font-size: 1.5rem;
+    cursor: pointer;
+  }
+}
+
+.Container {
+  width: 90%;
+  margin: 2.5rem auto;
+  background: $whitebg;
+  color: $black;
+  padding: 2rem;
+  border: 2px solid $primary-light;
+}
+
+.btn {
+  padding: 1rem 1rem;
+  margin: 1rem;
+  cursor: pointer;
+  outline: none;
+}
+
+.btnWarning {
+  background: $warning;
+  border: 1px solid $warningBorder;
+  color: $warningBorder;
+}
+
+.btnDanger {
+  background: $danger;
+  border: 1px solid $dangerBorder;
+  color: $dangerBorder;
+}

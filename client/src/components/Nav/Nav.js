@@ -39,6 +39,7 @@ function Nav(props) {
             </>
         :
             <> 
+                <Link to="/users" className={props.history.location.pathname==="/users"?`${styles.link} ${styles.active}`:styles.link}>Users</Link>
                 <p 
                     className={`${styles.link} ${styles.dropdownToggler}`} 
                     onMouseEnter={toggleDropdownOpen} 

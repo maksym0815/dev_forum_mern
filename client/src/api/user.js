@@ -11,3 +11,14 @@ export const getProfile = (userId, token)=>{
     .then(data=> data.json())
     .catch(error=> console.log(error))
 }
+
+export const getUsers = ()=>{
+    return fetch(`${URL}/users`, {
+        method: "GET",
+        headers: {
+            "Content-Type": "application/json",
+        }
+    })
+    .then(data=> data.json())
+    .catch(error=> console.log(error))
+}

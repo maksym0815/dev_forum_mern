@@ -12,8 +12,6 @@ function Profile(props){
 
     const dispatch = useDispatch();
 
-    const [allowEdit, setAllowEdit] = useState(false);
-
     const [user, setUser] = useState({
         _id: "",
         username: "",
@@ -23,22 +21,23 @@ function Profile(props){
     })
     
     useEffect(()=>{
+        dispatch(actions.startLoading());
         if(!userId){
             userId = isLoggedIn()._id;
         }
         getProfile(userId, isLoggedIn().token).then((response)=>{
             if(response.message=="jwt malformed"){
                 dispatch(actions.startError("Please login to continue."));
+                dispatch(actions.endLoading());
                 return props.history.push("/login");
             }
             if(response.error){
                 dispatch(actions.startError("An unexpected error occured. Please try again."));
+                dispatch(actions.endLoading());
                 return props.history.push("/");
             }
             setUser(response.user);
-            if(isLoggedIn() && isLoggedIn()._id == userId){
-                setAllowEdit(true);
-            }
+            dispatch(actions.endLoading());
         });
     }, [])
 
@@ -49,13 +48,13 @@ function Profile(props){
                     <div className={styles.profileLeft}>
                         <h2>Welcome {user.username},</h2>
                         <p><span>Email:</span> {user.email}</p>
-                        <p><span>Account Created On:</span> {user.creationDate.slice(0,10)} </p>
+                        <p><span>Joined on:</span> {user.creationDate.slice(0,10)} </p>
                     </div>
-                    {allowEdit?
                     <div className={styles.profileRight}>
-                        <Button type="warning">EDIT PROFILE</Button>
-                        <Button type="danger">DELETE PROFILE</Button>
-                    </div>:null}
+                        {isLoggedIn() && isLoggedIn()._id==user._id && 
+                        (<><Button type="warning">EDIT PROFILE</Button>
+                        <Button type="danger">DELETE PROFILE</Button></>)}
+                    </div>
                 </div>
             </Container>
         </main>

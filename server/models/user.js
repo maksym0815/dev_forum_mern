@@ -24,6 +24,10 @@ const userModel = new Schema({
     updatedDate:{
         type: Date,
         default: Date.now
+    },
+    profilePicture:{
+        type: String,
+        default: "/images/default.png"
     }
 })
 

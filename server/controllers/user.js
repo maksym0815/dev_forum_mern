@@ -3,7 +3,7 @@ const _ = require("lodash")
 
 exports.getUsers = async(req,res, next)=>{
     try{
-        const users = await Users.find().select("_id email username")
+        const users = await Users.find().select("_id email username creationDate profilePicture")
         return res.json({
             users,
             message: "Fetched users successfully!"
@@ -18,7 +18,7 @@ exports.getUsers = async(req,res, next)=>{
 
 exports.getUser = async(req,res, next)=>{
     try{
-        const user = await Users.findById(req.params.userId).select("_id email username creationDate updatedDate")
+        const user = await Users.findById(req.params.userId).select("_id email username creationDate updatedDate profilePicture")
         return res.json({
             user,
             message: "Fetched user successfully!"

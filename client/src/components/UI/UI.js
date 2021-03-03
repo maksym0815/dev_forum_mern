@@ -33,6 +33,7 @@ export function ErrorModal(props){
             <div className={styles.ErrorModal}>
                 <p>{props.errorOccured.message}</p>
                 <FontAwesomeIcon className={styles.icon} icon={faTimes} onClick={()=>dispatch(actions.stopError())}/>
+                <Button type="danger" click={()=>dispatch(actions.stopError())}>CLOSE</Button>
             </div>:null}
         </>
     )
@@ -48,7 +49,7 @@ export function Container(props){
 
 export function Button(props){
     return (
-        <button className={props.type=="warning"?`${styles.btn} ${styles.btnWarning}`:`${styles.btn} ${styles.btnDanger}`}>
+        <button className={props.type=="warning"?`${styles.btn} ${styles.btnWarning}`:`${styles.btn} ${styles.btnDanger}`} onClick={props.click}>
             {props.children}
         </button>
     )

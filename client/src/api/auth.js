@@ -1,4 +1,4 @@
-const URL = "http://localhost:5000";
+const URL = process.env.REACT_APP_URL;
 
 export const signup = (data)=>{
     return fetch(`${URL}/auth/register`, {

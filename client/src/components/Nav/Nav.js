@@ -32,6 +32,7 @@ function Nav(props) {
         </div>
         <div className={styles.navRight}>
         <Link to="/" className={props.history.location.pathname==="/"?`${styles.link} ${styles.active}`:styles.link}>Home</Link>
+        <Link to="/users" className={props.history.location.pathname==="/users"?`${styles.link} ${styles.active}`:styles.link}>Users</Link>
         {!isLoggedIn()?
             <>
                 <Link to="/login" className={props.history.location.pathname==="/login"?`${styles.link} ${styles.active}`:styles.link}>Login</Link>
@@ -39,7 +40,6 @@ function Nav(props) {
             </>
         :
             <> 
-                <Link to="/users" className={props.history.location.pathname==="/users"?`${styles.link} ${styles.active}`:styles.link}>Users</Link>
                 <p 
                     className={`${styles.link} ${styles.dropdownToggler}`} 
                     onMouseEnter={toggleDropdownOpen} 

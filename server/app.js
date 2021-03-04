@@ -23,7 +23,7 @@ const fileStorage = multer.diskStorage({
         cb(null, "images");
     },
     filename: (req, file, cb)=>{
-        cb(null, v4())
+        cb(null, `${v4()}.${file.mimetype.split("/")[1]}`)
     }
 })
 
@@ -40,6 +40,7 @@ const fileFilter = (req, file, cb)=>{
 
 //3rd party middlewares
 
+app.use(cors());
 app.use(bodyParser.urlencoded({extended: true}));
 app.use(bodyParser.json());
 app.use(multer({
@@ -47,7 +48,6 @@ app.use(multer({
     fileFilter: fileFilter
 }).single("image"));
 app.use(cookieParser());
-app.use(cors());
 app.use(morgan("dev"));
 app.use("/images", express.static(path.join(__dirname, "images")));
 

@@ -5,6 +5,7 @@ import styles from "./Register.module.scss";
 import {signup} from "../../api/auth";
 import Form from "../../components/Form/Form";
 import {Status} from "../../components/UI/UI";
+import {Link} from "react-router-dom";
 
 function Register() {
     const dispatch = useDispatch();
@@ -64,6 +65,7 @@ function Register() {
           <h3>Register</h3>
           <Status status={status}/>
           <Form formSubmitHandler={formSubmitHandler} formChangeHandler={formChangeHandler} formData={formData}/>
+          <p>Have an account? Login <Link style={{color:"white"}}to="/login">here</Link></p>
           <div className={styles.line}></div>
         </div>
       </main>

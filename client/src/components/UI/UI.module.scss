@@ -132,6 +132,7 @@
   margin: 1rem;
   cursor: pointer;
   outline: none;
+  min-width: 10rem;
 }
 
 .btnWarning {
@@ -154,5 +155,17 @@
     background: $dangerBorder;
     border: 1px solid $danger;
     color: $danger;
+  }
+}
+
+.btnSuccess {
+  background: $success;
+  border: 1px solid $successBorder;
+  color: $successBorder;
+  transition: all 0.4s ease;
+  &:hover {
+    background: $successBorder;
+    border: 1px solid $success;
+    color: $success;
   }
 }

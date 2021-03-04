@@ -5,8 +5,11 @@
   justify-content: space-between;
   align-items: center;
   .profileLeft {
+    display: flex;
+    justify-content: center;
+    align-items: center;
     h2 {
-      margin: 1rem 0;
+      margin: 0rem 0rem 1rem 0rem;
       font-size: 2rem;
     }
     span {
@@ -16,5 +19,100 @@
     p {
       font-size: 1rem;
     }
+    .profileLeftPicture {
+      margin: 2rem;
+      position: relative;
+      img {
+        width: 150px;
+        height: 150px;
+        object-fit: cover;
+      }
+      button {
+        border: none;
+        background: $primary;
+        color: $white;
+        font-weight: 600;
+        position: absolute;
+        bottom: 0;
+        left: 0;
+        width: 100%;
+        font-size: 0.8rem;
+        cursor: pointer;
+        padding: 1rem;
+        outline: none;
+      }
+    }
+  }
+  .profileRight {
+    position: relative;
+    overflow: hidden;
+  }
+}
+
+.confirmModal {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  transform: translateX(100%);
+  background: $primary-dark;
+}
+
+.confirmModalOpen {
+  animation: slide 0.3s ease forwards;
+}
+
+.editForm {
+  form {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    .uploadFileContainer {
+      position: relative;
+      color: black;
+      top: 0;
+      left: 0;
+      border: 1px solid $successBorder;
+      border-right: none;
+      pointer-events: none;
+      p {
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        color: $grey;
+      }
+    }
+    input {
+      padding: 0.8rem;
+      pointer-events: all;
+      opacity: 0;
+      cursor: pointer;
+    }
+    button {
+      padding: 1rem 1rem;
+      cursor: pointer;
+      outline: none;
+      min-width: 10rem;
+      height: 100%;
+      background: $success;
+      border: 1px solid $successBorder;
+      color: $successBorder;
+      transition: all 0.4s ease;
+      &:hover {
+        background: $successBorder;
+        border: 1px solid $success;
+        color: $success;
+      }
+    }
+  }
+}
+
+@keyframes slide {
+  0% {
+    transform: translateX(100%);
+  }
+  100% {
+    transform: translateX(0%);
   }
 }

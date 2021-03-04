@@ -17,11 +17,11 @@ const userModel = new Schema({
         type: String,
         required: true
     },
-    creationDate: {
+    createdAt: {
         type: Date,
         default: Date.now
     },
-    updatedDate:{
+    updatedAt:{
         type: Date,
         default: Date.now
     },

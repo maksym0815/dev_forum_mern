@@ -24,10 +24,10 @@ main {
 }
 
 .box1 {
-  width: 200px;
-  height: 200px;
-  top: 30%;
-  left: 10%;
+  width: 300px;
+  height: 300px;
+  top: 25%;
+  left: -5%;
   transform: rotate(60deg);
   animation: color 7s ease-in infinite alternate-reverse;
 }
@@ -36,8 +36,8 @@ main {
   width: 350px;
   height: 400px;
   top: 75%;
-  left: 60%;
-  transform: rotate(-15deg);
+  left: 80%;
+  transform: rotate(-20deg);
   animation: color 10s ease-in infinite;
 }
 

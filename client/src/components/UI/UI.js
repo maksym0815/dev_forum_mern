@@ -49,7 +49,7 @@ export function Container(props){
 
 export function Button(props){
     return (
-        <button className={props.type=="warning"?`${styles.btn} ${styles.btnWarning}`:`${styles.btn} ${styles.btnDanger}`} onClick={props.click}>
+        <button className={props.type=="warning"||props.type=="success"?(props.type=="warning"?`${styles.btn} ${styles.btnWarning}`:`${styles.btn} ${styles.btnSuccess}`):`${styles.btn} ${styles.btnDanger}`} onClick={props.click}>
             {props.children}
         </button>
     )

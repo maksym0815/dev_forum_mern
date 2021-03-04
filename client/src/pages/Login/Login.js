@@ -5,7 +5,7 @@ import styles from "./Login.module.scss";
 import {login} from "../../api/auth";
 import Form from "../../components/Form/Form";
 import {Status} from "../../components/UI/UI";
-import {withRouter} from "react-router-dom";
+import {withRouter, Link} from "react-router-dom";
 
 function Login(props) {
     const dispatch = useDispatch();
@@ -62,6 +62,7 @@ function Login(props) {
           <h3>Login</h3>
           <Status status={status}/>
           <Form formSubmitHandler={formSubmitHandler} formChangeHandler={formChangeHandler} formData={formData}/>
+          <p>New user? Please signup <Link style={{color:"white"}}to="/register">here</Link></p>
           <div className={styles.line}></div>
         </div>
       </main>

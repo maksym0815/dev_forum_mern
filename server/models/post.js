@@ -16,9 +16,6 @@ const postSchema = new Schema({
         minlength: 5,
         maxlength: 2000
     },
-    image: {
-        type: String,
-    },
     creator: {
         type: Schema.Types.ObjectId,
         ref: "User"

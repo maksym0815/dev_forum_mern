@@ -38,16 +38,27 @@ exports.updateUser = async (req,res, next)=>{
         const reqBody = JSON.parse(req.body.user);
         const user = await Users.findById(req.params.userId);
         if(req.userId == user._id){
+            if(user.email!=reqBody.email){
+                const doesUserExist = await Users.find({email: reqBody.email});
+                if(doesUserExist.length>0){
+                    const error = new Error("User already exists!");
+                    error.statusCode = 409;
+                    error.data = "User already exists!";
+                    throw error;
+                }
+            }
             let profilePicture = reqBody.profilePicture;
             if(req.file){
                 profilePicture = "/"+req.file.path.replace("\\", "/");
             }
-            if(profilePicture!=user.profilePicture && user.profilePicture!="/images/default.png"){
+            if(profilePicture!="" && profilePicture!=undefined && profilePicture!=null && profilePicture!=user.profilePicture && user.profilePicture!="/images/default.png"){
                 clearImage(user.profilePicture);
             }
-            _.extend(user, reqBody);
-            user.profilePicture = profilePicture;
-            user.updatedDate = Date.now();
+            _.extend(user, {...reqBody, profilePicture: user.profilePicture});
+            if(profilePicture!="" && profilePicture!=undefined && profilePicture!=null){
+                user.profilePicture = profilePicture;
+            }
+            user.updatedAt = Date.now();
             const updatedUser = await user.save();
             updatedUser.password = undefined;
             return res.json({
@@ -95,7 +106,6 @@ exports.deleteUser = async (req,res,next)=>{
 
 const clearImage = (filePath)=>{
     filePath = path.join(__dirname, "..", filePath);
-    console.log(filePath);
     fs.unlink(filePath, err=>{
         console.log(err);
     })

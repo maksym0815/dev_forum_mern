@@ -35,13 +35,13 @@ export const deleteUser = (userId, token)=>{
     .catch(error=> console.log(error))
 }
 
-export const updateUser = (user, fileData, token)=>{
-    return fetch(`${URL}/user/${user._id}`, {
+export const updateUser = (userId, formData, token)=>{
+    return fetch(`${URL}/user/${userId}`, {
         method: "PUT",
         headers: {
             "Authorization": `Bearer ${token}`
         },
-        body: fileData
+        body: formData
     })
     .then(data=> data.json())
     .catch(error=> console.log(error))

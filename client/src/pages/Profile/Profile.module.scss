@@ -62,7 +62,7 @@
   animation: slide 0.3s ease forwards;
 }
 
-.editForm {
+.editImageForm {
   form {
     display: flex;
     justify-content: center;
@@ -94,6 +94,40 @@
       cursor: pointer;
       outline: none;
       min-width: 10rem;
+      height: 100%;
+      background: $success;
+      border: 1px solid $successBorder;
+      color: $successBorder;
+      transition: all 0.4s ease;
+      &:hover {
+        background: $successBorder;
+        border: 1px solid $success;
+        color: $success;
+      }
+    }
+  }
+}
+
+.editForm {
+  width: 100%;
+  margin: auto;
+  form {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    input {
+      width: 30%;
+      padding: 1rem 1rem;
+      cursor: pointer;
+      margin: 1rem 0;
+    }
+    button {
+      margin: 1rem;
+      padding: 1rem 1rem;
+      width: 30%;
+      cursor: pointer;
+      outline: none;
       height: 100%;
       background: $success;
       border: 1px solid $successBorder;

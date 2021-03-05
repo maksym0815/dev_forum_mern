@@ -35,17 +35,17 @@ exports.getUser = async(req,res, next)=>{
 
 exports.updateUser = async (req,res, next)=>{
     try{
+        const reqBody = JSON.parse(req.body.user);
         const user = await Users.findById(req.params.userId);
         if(req.userId == user._id){
-            let profilePicture = req.body.profilePicture;
+            let profilePicture = reqBody.profilePicture;
             if(req.file){
                 profilePicture = "/"+req.file.path.replace("\\", "/");
             }
-            
-            if(profilePicture!=user.profilePicture && profilePicture!="/images/default.png"){
-                // clearImage(user.profilePicture);
+            if(profilePicture!=user.profilePicture && user.profilePicture!="/images/default.png"){
+                clearImage(user.profilePicture);
             }
-            _.extend(user, req.body);
+            _.extend(user, reqBody);
             user.profilePicture = profilePicture;
             user.updatedDate = Date.now();
             const updatedUser = await user.save();

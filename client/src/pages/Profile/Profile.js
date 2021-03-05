@@ -72,7 +72,7 @@ function Profile(props){
         e.preventDefault();
         const formData = new FormData();
         formData.append("image", images);
-        formData.append("user", user);
+        formData.append("user", JSON.stringify(user));
         updateUser(user, formData, isLoggedIn().token).then(response=>{
             setUser(response.user);
             console.log(response);

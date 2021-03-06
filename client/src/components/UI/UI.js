@@ -41,7 +41,7 @@ export function ErrorModal(props){
 
 export function Container(props){
     return (
-        <div className={styles.Container}>
+        <div className={styles.Container} style={props.nopadding?{padding: 0}:{}}>
             {props.children}
         </div>
     )

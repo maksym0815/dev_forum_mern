@@ -2,11 +2,11 @@ import React, { useState, useEffect, useRef } from "react";
 import {useDispatch} from "react-redux";
 import * as actions from "../../store/actions/UI";
 import {useParams} from "react-router-dom";
-import {isLoggedIn} from "../../api/auth";
+import {isLoggedIn, updateLocalStorageData} from "../../api/auth";
 import {getProfile} from "../../api/user";
 import {Container, Button} from "../../components/UI/UI";
 import styles from "./Profile.module.scss";
-import {deleteUser, updateUser} from "../../api/user";
+import {updateUser} from "../../api/user";
 
 function Profile(props){
     let {userId} = useParams();
@@ -24,8 +24,6 @@ function Profile(props){
 
     const [images, setImages] = useState(null);
 
-    const [deleteSlider, setDeleteSlider] = useState(false);
-
     const [uploadImage, setUploadImage] = useState(false);
 
     const [editProfile, setEditProfile] = useState(false);
@@ -33,7 +31,7 @@ function Profile(props){
     const[editProfileData, setEditProfileData] = useState({
         username: "",
         email: "",
-        profilePicture: user.profilePicture
+        password: "",
     })
 
     const imageElement = useRef(null);
@@ -59,30 +57,12 @@ function Profile(props){
         });
     }, [userId]);
 
-    const deleteProfileHandler = ()=>{
-        setDeleteSlider(true);
-    }
-
-    const deleteProfile=(userId)=>{
-        deleteUser(userId, isLoggedIn().token).then(response=>{
-            setDeleteSlider(false);
-            localStorage.removeItem("user");
-            if(response.error){
-                dispatch.startError("Account could not be deleted. Please try again later.");
-            }else{
-                dispatch(actions.startError("Account deleted successfully."));
-            }
-            props.history.push("/");
-        });
-    }
-
     const imageUploadHandler=(e)=>{
         dispatch(actions.startLoading());
         e.preventDefault();
         const formData = new FormData();
         formData.append("image", images);
-        formData.append("user", JSON.stringify({}));
-        updateUser(user._id, formData, isLoggedIn().token).then(response=>{
+        updateUser(user._id, formData, isLoggedIn().token, "picture").then(response=>{
             if(response.error){
                 return dispatch(actions.startError("Image could not be changed. Please try again later."));
             }
@@ -92,24 +72,52 @@ function Profile(props){
         })
     }
 
+    const isInputValid = (field)=>{
+        switch(field){
+            case "username":
+                if(editProfileData["username"]==0){
+                    dispatch(actions.startError("Username cannot be empty."));
+                    return false;
+                }
+                break;
+            case "email":
+                if(editProfileData["email"]==0){
+                    dispatch(actions.startError("Email cannot be empty."));
+                    return false;
+                }
+                break;
+            default:
+                return true;
+            } 
+        return true;
+    }
+
     const editProfileHandler=(e)=>{
         e.preventDefault();
-        const formData = new FormData();
-        formData.append("user", JSON.stringify(editProfileData));
         dispatch(actions.startLoading());
-        updateUser(user._id, formData, isLoggedIn().token).then(response=>{
-            if(response.error){
+        const field = e.target.getAttribute("name");
+        if(isInputValid(field)){
+            const formData = new FormData();
+            formData.append("user", JSON.stringify({
+                [field]: editProfileData[field]
+            }));
+            updateLocalStorageData(field, editProfileData[field])
+            dispatch(actions.startLoading());
+            updateUser(user._id, formData, isLoggedIn().token, field).then(response=>{
+                if(response.error){
+                    dispatch(actions.endLoading());
+                    return dispatch(actions.startError(response.message));
+                }
+                setUser(response.user);
+                setEditProfile(false);
+                setEditProfileData({
+                    username: "",
+                    email: "",
+                });
                 dispatch(actions.endLoading());
-                return dispatch(actions.startError(response.message));
-            }
-            setUser(response.user);
-            setEditProfile(false);
-            setEditProfileData({
-                username: "",
-                email: "",
             });
-            dispatch(actions.endLoading());
-        })
+        }
+        dispatch(actions.startLoading());
     }
 
     return (
@@ -133,15 +141,10 @@ function Profile(props){
                     </div>
                     <div className={styles.profileRight}>
                         {isLoggedIn() && isLoggedIn()._id==user._id && 
-                        (<><Button type="warning" click={()=>{
+                        (<Button type="warning" click={()=>{
                             setEditProfile(!editProfile);
                             setUploadImage(false);
-                            }}>EDIT PROFILE</Button>
-                        <Button type="danger" click={deleteProfileHandler}>DELETE PROFILE</Button>
-                        <div className={deleteSlider?`${styles.confirmModal} ${styles.confirmModalOpen}`:`${styles.confirmModal}`}>
-                            <Button type="success" click={()=>deleteProfile(user._id)}>CONFIRM DELETE</Button>
-                            <Button type="danger" click={()=>setDeleteSlider(false)}>NO</Button>
-                        </div></>)}
+                            }}>EDIT PROFILE</Button>)}
                     </div>
                 </div>
             </Container>
@@ -164,14 +167,16 @@ function Profile(props){
             {editProfile && isLoggedIn() && isLoggedIn()._id==user._id?(
             <Container>
                 <div className={styles.editForm}>
-                    <form onSubmit={editProfileHandler}>
-                        <input placeholder="Enter your username!" type="text" name="username" value={editProfileData.username} onChange={(e)=>setEditProfileData({...editProfileData, username: e.target.value})}/>
-                        <input placeholder="Enter your email!" type="email" name="email" value={editProfileData.email}  onChange={(e)=>setEditProfileData({...editProfileData, email: e.target.value})}/>
-                        <button type="submit">SUBMIT</button>
+                    <form onSubmit={editProfileHandler} name="username">
+                        <input placeholder="Enter your updated username!" type="text" name="username" value={editProfileData.username} onChange={(e)=>setEditProfileData({...editProfileData, username: e.target.value})}/>
+                        <button type="submit">EDIT</button>
+                    </form>
+                    <form onSubmit={editProfileHandler}  name="email">
+                        <input placeholder="Enter your updated email!" type="email" name="email" value={editProfileData.email}  onChange={(e)=>setEditProfileData({...editProfileData, email: e.target.value})}/>
+                        <button type="submit">EDIT</button>
                     </form>
                 </div>
             </Container>):null}
-            
         </main>
            
     )

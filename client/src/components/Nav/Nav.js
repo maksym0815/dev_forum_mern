@@ -50,7 +50,8 @@ function Nav(props) {
                     className={dropdownOpen?`${styles.dropdownOpen} ${styles.dropdown}`:`${styles.dropdownClose} ${styles.dropdown}`} 
                     onMouseEnter={toggleDropdownOpen}  
                     onMouseLeave={toggleDropdownClose}>
-                        <Link to="/profile" className={props.history.location.pathname==="/profile"?`${styles.link} ${styles.active}`:styles.link}>Profile</Link>
+                        <Link to="/profile" className={props.history.location.pathname==="/profile" || props.history.location.pathname===`/profile/${isLoggedIn()._id}`?`${styles.link} ${styles.active}`:styles.link}>Profile</Link>
+                        <Link to="/settings" className={props.history.location.pathname==="/settings"?`${styles.link} ${styles.active}`:styles.link}>Account Settings</Link>
                         <Link to="/logout" className={styles.link} onClick={e=>LogoutHandler(e)}>Logout</Link>
                 </div>
             </>}

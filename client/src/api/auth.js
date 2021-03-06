@@ -31,3 +31,11 @@ export const isLoggedIn = ()=>{
         return false;
     }
 }
+
+export const updateLocalStorageData = (field, data)=>{
+    const user = JSON.parse(localStorage.getItem("user"));
+    if(user[field]){
+        user[field] = data;
+    }
+    localStorage.setItem("user", JSON.stringify(user));
+}

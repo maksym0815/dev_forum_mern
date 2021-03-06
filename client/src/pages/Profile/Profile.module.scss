@@ -49,19 +49,6 @@
   }
 }
 
-.confirmModal {
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: 100%;
-  transform: translateX(100%);
-  background: $primary-dark;
-}
-
-.confirmModalOpen {
-  animation: slide 0.3s ease forwards;
-}
-
 .editImageForm {
   form {
     display: flex;
@@ -115,20 +102,17 @@
     display: flex;
     justify-content: center;
     align-items: center;
-    flex-direction: column;
     input {
       width: 30%;
       padding: 1rem 1rem;
-      cursor: pointer;
       margin: 1rem 0;
+      border: 1px solid $successBorder;
     }
     button {
-      margin: 1rem;
       padding: 1rem 1rem;
-      width: 30%;
+      width: 10%;
       cursor: pointer;
       outline: none;
-      height: 100%;
       background: $success;
       border: 1px solid $successBorder;
       color: $successBorder;

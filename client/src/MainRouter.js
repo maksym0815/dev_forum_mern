@@ -1,15 +1,17 @@
 import React from "react";
 import {Switch, Route} from "react-router-dom";
+import {useSelector} from "react-redux";
+import ProtectedRoute from "./hoc/ProtectedRoute";
+import Nav from "./components/Nav/Nav";
 import Home from "./pages/Home/Home";
 import Register from "./pages/Register/Register";
 import Login from "./pages/Login/Login";
 import Profile from "./pages/Profile/Profile";
 import Users from "./pages/Users/Users";
-import Nav from "./components/Nav/Nav";
+import AccountSettings from "./pages/Account Settings/AccountSettings";
 import {Loader, ErrorModal} from "./components/UI/UI";
-import {useSelector} from "react-redux";
 
-const MainRouter = (props)=>{
+const MainRouter = ()=>{
     const isLoading = useSelector(state=> state.UI.isLoading);
     const errorOccured = useSelector(state=> state.UI.errorOccured);
     return(
@@ -21,8 +23,9 @@ const MainRouter = (props)=>{
                 <Route exact path="/login" component={Login}/>
                 <Route exact path="/register" component={Register}/>
                 <Route exact path="/users" component={Users}/>
-                <Route exact path="/profile/:userId" component={Profile}/>
-                <Route exact path="/profile" component={Profile}/>
+                <ProtectedRoute exact path="/profile/:userId" component={Profile}/>
+                <ProtectedRoute exact path="/profile" component={Profile}/>
+                <ProtectedRoute exact path="/settings" component={AccountSettings}/>
                 <Route exact path="/" component={Home}/>
             </Switch>
         </>

@@ -18,8 +18,6 @@ function Users(props){
             })  
     }, [])
 
-    console.log(users)
-
     return (
         <main>
             <Container>

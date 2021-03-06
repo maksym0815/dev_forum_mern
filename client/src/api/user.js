@@ -23,20 +23,22 @@ export const getUsers = ()=>{
     .catch(error=> console.log(error))
 }
 
-export const deleteUser = (userId, token)=>{
+export const deleteUser = (userId, deleteAccountPassword, token)=>{
     return fetch(`${URL}/user/${userId}`, {
         method: "DELETE",
         headers: {
             "Content-Type": "application/json",
             "Authorization": `Bearer ${token}`
-        }
+        },
+        body: JSON.stringify({
+            password: deleteAccountPassword})
     })
     .then(data=> data.json())
     .catch(error=> console.log(error))
 }
 
-export const updateUser = (userId, formData, token)=>{
-    return fetch(`${URL}/user/${userId}`, {
+export const updateUser = (userId, formData, token, edit)=>{
+    return fetch(`${URL}/user/${userId}?edit=${edit}`, {
         method: "PUT",
         headers: {
             "Authorization": `Bearer ${token}`

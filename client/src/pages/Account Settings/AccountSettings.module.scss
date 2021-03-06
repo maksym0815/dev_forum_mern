@@ -1,0 +1,48 @@
+@import "../../variables.scss";
+
+.innerContainer {
+  display: flex;
+  min-height: 70vh;
+}
+
+.leftContainer {
+  width: 25%;
+  background: $white;
+  border-right: 10px solid $primary;
+  p {
+    padding: 1.5rem;
+    text-align: center;
+    cursor: pointer;
+    font-weight: 600;
+    color: $black;
+    background: $whitebg;
+  }
+  .active {
+    background: $secondary;
+    color: $white;
+  }
+}
+
+.rightContainer {
+  width: 75%;
+  padding: 1rem;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  form {
+    display: flex;
+    flex-direction: column;
+    width: 50%;
+    margin: auto;
+    input {
+      padding: 1rem;
+      border: 1px solid $primary;
+      margin: 1rem;
+    }
+    p {
+      font-size: 0.9rem;
+      text-align: center;
+      color: $dangerBorder;
+    }
+  }
+}

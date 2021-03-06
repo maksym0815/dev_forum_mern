@@ -20,16 +20,20 @@ nav {
   }
   .navRight {
     display: flex;
+    position: relative;
     .link {
-      padding: 1.5rem;
-      width: 6rem;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      min-width: 6rem;
       text-align: center;
       text-decoration: none;
       color: $white;
-      height: 100%;
+      height: 10vh;
       transition: all 0.2s ease;
       &:hover {
         color: $grey;
+        background: $primary;
       }
     }
 
@@ -40,6 +44,7 @@ nav {
 
     .icon {
       transform: translateY(10%);
+      margin-left: 0.5rem;
     }
 
     .dropdownToggler {
@@ -50,23 +55,28 @@ nav {
     .dropdown {
       background: $primary-dark;
       border: 1px solid $grey;
-      padding: 1.5rem;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      width: 100%;
       position: absolute;
-      top: 0%;
-      right: 0%;
       z-index: 200;
       transition: all 0.2s ease;
+      .link {
+        width: 100%;
+      }
     }
 
     .dropdownClose {
       opacity: 0;
-      transform: translate(100%, 100%);
+      transform: translate(100%, 10vh);
       pointer-events: none;
     }
 
     .dropdownOpen {
       opacity: 1;
-      transform: translate(0%, 100%);
+      transform: translate(0%, 10vh);
       pointer-events: all;
     }
   }

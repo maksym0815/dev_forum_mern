@@ -17,6 +17,11 @@ const userModel = new Schema({
         type: String,
         required: true
     },
+    status: {
+        type: String,
+        default: "Not set.",
+        trim: true
+    },
     createdAt: {
         type: Date,
         default: Date.now

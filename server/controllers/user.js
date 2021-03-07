@@ -6,7 +6,7 @@ const bcrypt = require("bcrypt");
 
 exports.getUsers = async(req,res, next)=>{
     try{
-        const users = await Users.find().select("_id email username createdAt profilePicture")
+        const users = await Users.find().select("_id email username createdAt profilePicture status")
         return res.json({
             users,
             message: "Fetched users successfully!"
@@ -21,7 +21,7 @@ exports.getUsers = async(req,res, next)=>{
 
 exports.getUser = async(req,res, next)=>{
     try{
-        const user = await Users.findById(req.params.userId).select("_id email username createdAt updatedAt profilePicture")
+        const user = await Users.findById(req.params.userId).select("_id email username createdAt updatedAt profilePicture status")
         return res.json({
             user,
             message: "Fetched user successfully!"
@@ -81,6 +81,10 @@ exports.updateUser = async (req,res, next)=>{
                         throw error;
                     }
                     break;
+                case "status":
+                    reqBody = JSON.parse(req.body.user);
+                    _.extend(user, {...reqBody});
+                    break;
                 default:
                     const error = new Error("No edit specified.");
                     error.statusCode = 404;
@@ -108,16 +112,6 @@ exports.updateUser = async (req,res, next)=>{
     }
 }
 
-exports.updatePassword = async (req,res,next)=>{
-    try{
-
-    }catch(error){
-        if(!error.statusCode){
-            error.statusCode=500;
-        }
-        next(error);
-    }
-}
 
 exports.deleteUser = async (req,res,next)=>{
     try{
@@ -144,6 +138,27 @@ exports.deleteUser = async (req,res,next)=>{
             error.data = "Unauthorized!";
             throw error;
         }
+    }catch(error){
+        if(!error.statusCode){
+            error.statusCode=500;
+        }
+        next(error);
+    }
+}
+
+exports.findUser = async (req,res,next)=>{
+    const searchQuery = req.query.search;
+    try{
+        const users = await Users.find({
+            $or: [
+                {"username": {$regex: `(?i)^${searchQuery}`}},
+                {"email": {$regex: `(?i)^${searchQuery}`}}
+            ]
+        }).select("_id email username createdAt profilePicture status");
+        return res.json({
+            users,
+            message: "Fetched users successfully!"
+        })
     }catch(error){
         if(!error.statusCode){
             error.statusCode=500;

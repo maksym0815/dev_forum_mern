@@ -1,7 +1,7 @@
 import React, { useState, useEffect, useRef } from "react";
 import {useDispatch} from "react-redux";
 import * as actions from "../../store/actions/UI";
-import {useParams} from "react-router-dom";
+import {useParams, withRouter} from "react-router-dom";
 import {isLoggedIn, updateLocalStorageData} from "../../api/auth";
 import {getProfile} from "../../api/user";
 import {Container, Button} from "../../components/UI/UI";
@@ -19,6 +19,7 @@ function Profile(props){
         email: "",
         createdAt: "",
         updatedAt: "",
+        status: "",
         profilePicture: ""
     });
 
@@ -31,11 +32,13 @@ function Profile(props){
     const[editProfileData, setEditProfileData] = useState({
         username: "",
         email: "",
-        password: "",
+        status: ""
     })
 
     const imageElement = useRef(null);
     
+    console.log(userId)
+
     useEffect(()=>{
         dispatch(actions.startLoading());
         if(!userId){
@@ -50,7 +53,7 @@ function Profile(props){
             if(response.error){
                 dispatch(actions.startError("An unexpected error occured. Please try again."));
                 dispatch(actions.endLoading());
-                return props.history.push("/");
+                return props.history.push("/"); 
             }
             setUser(response.user);
             dispatch(actions.endLoading());
@@ -75,17 +78,22 @@ function Profile(props){
     const isInputValid = (field)=>{
         switch(field){
             case "username":
-                if(editProfileData["username"]==0){
+                if(editProfileData["username"].length==0){
                     dispatch(actions.startError("Username cannot be empty."));
                     return false;
                 }
                 break;
             case "email":
-                if(editProfileData["email"]==0){
+                if(editProfileData["email"].length==0){
                     dispatch(actions.startError("Email cannot be empty."));
                     return false;
                 }
                 break;
+            case "status":
+                if(editProfileData["status"].length==0){
+                    dispatch(actions.startError("Status cannot be empty."));
+                    return false;
+                }
             default:
                 return true;
             } 
@@ -113,11 +121,12 @@ function Profile(props){
                 setEditProfileData({
                     username: "",
                     email: "",
+                    status: ""
                 });
                 dispatch(actions.endLoading());
             });
         }
-        dispatch(actions.startLoading());
+        dispatch(actions.endLoading());
     }
 
     return (
@@ -147,6 +156,7 @@ function Profile(props){
                             }}>EDIT PROFILE</Button>)}
                     </div>
                 </div>
+                <p className={styles.status}><span>Status:</span> {user.status}</p>
             </Container>
 
             {uploadImage && isLoggedIn() && isLoggedIn()._id==user._id?(
@@ -175,6 +185,10 @@ function Profile(props){
                         <input placeholder="Enter your updated email!" type="email" name="email" value={editProfileData.email}  onChange={(e)=>setEditProfileData({...editProfileData, email: e.target.value})}/>
                         <button type="submit">EDIT</button>
                     </form>
+                    <form onSubmit={editProfileHandler}  name="status">
+                        <input placeholder="Enter a new status!" type="text" name="status" value={editProfileData.status}  onChange={(e)=>setEditProfileData({...editProfileData, status: e.target.value})}/>
+                        <button type="submit">EDIT</button>
+                    </form>
                 </div>
             </Container>):null}
         </main>
@@ -182,4 +196,4 @@ function Profile(props){
     )
 }
 
-export default Profile;
+export default withRouter(Profile);

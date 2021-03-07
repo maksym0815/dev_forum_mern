@@ -126,6 +126,21 @@
   }
 }
 
+.status {
+  background: $white;
+  padding: 1rem;
+  color: $black;
+  border: 1px solid $secondary;
+  position: absolute;
+  width: 85%;
+  box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.2);
+  font-weight: 200;
+  span {
+    color: $secondary;
+    font-weight: 600;
+  }
+}
+
 @keyframes slide {
   0% {
     transform: translateX(100%);

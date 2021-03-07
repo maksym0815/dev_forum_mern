@@ -48,3 +48,11 @@ export const updateUser = (userId, formData, token, edit)=>{
     .then(data=> data.json())
     .catch(error=> console.log(error))
 }
+
+export const searchUser = (searchQuery)=>{
+    return fetch(`${URL}/user?search=${searchQuery}`, {
+        method: "GET"
+    })  
+    .then(data=> data.json())
+    .catch(error=> console.log(error))
+}

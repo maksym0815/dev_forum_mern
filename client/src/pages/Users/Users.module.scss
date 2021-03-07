@@ -1,16 +1,32 @@
 @import "../../variables.scss";
 
+.Search {
+  input {
+    width: 100%;
+    padding: 0.8rem 1rem;
+    border: 1px solid $grey;
+    background: $white;
+    color: $grey;
+    font-size: 0.9rem;
+  }
+  margin: 0 0 2rem 0;
+}
+
 .Users {
   display: flex;
   flex-wrap: wrap;
   justify-content: center;
   align-items: center;
+  p {
+    color: $grey;
+  }
   .userCard {
     width: 350px;
+    position: relative;
     display: flex;
     justify-content: space-between;
     align-items: center;
-    padding: 2rem;
+    padding: 2rem 2rem 4rem 2rem;
     margin: 1rem;
     background: $white;
     box-shadow: 0px 0px 20px rgba(0, 0, 0, 0.1);
@@ -32,6 +48,24 @@
       span {
         font-weight: 500;
         color: $black;
+      }
+    }
+    .status {
+      background: $primary-dark;
+      color: $whitebg;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      position: absolute;
+      top: 85%;
+      left: 0;
+      min-height: 15%;
+      width: 100%;
+      font-weight: 200;
+      span {
+        color: $white;
+        margin-right: 0.5rem;
+        font-weight: 600;
       }
     }
   }

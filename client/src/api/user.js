@@ -56,3 +56,25 @@ export const searchUser = (searchQuery)=>{
     .then(data=> data.json())
     .catch(error=> console.log(error))
 }
+
+export const followUser = (userId, token)=>{
+    return fetch(`${URL}/user/${userId}/follow`, {
+        method: "PUT",
+        headers: {
+            "Authorization": `Bearer ${token}`
+        }
+    })  
+    .then(data=> data.json())
+    .catch(error=> console.log(error)) 
+}
+
+export const unfollowUser = (userId, token)=>{
+    return fetch(`${URL}/user/${userId}/unfollow`, {
+        method: "PUT",
+        headers: {
+            "Authorization": `Bearer ${token}`
+        }
+    })  
+    .then(data=> data.json())
+    .catch(error=> console.log(error)) 
+}

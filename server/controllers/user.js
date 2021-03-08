@@ -21,7 +21,7 @@ exports.getUsers = async(req,res, next)=>{
 
 exports.getUser = async(req,res, next)=>{
     try{
-        const user = await Users.findById(req.params.userId).select("_id email username createdAt updatedAt profilePicture status")
+        const user =  await Users.findById(req.params.userId).select("_id email username createdAt updatedAt profilePicture status followers following").populate("following followers", "_id email username createdAt updatedAt profilePicture status followers following");
         return res.json({
             user,
             message: "Fetched user successfully!"
@@ -158,6 +158,55 @@ exports.findUser = async (req,res,next)=>{
         return res.json({
             users,
             message: "Fetched users successfully!"
+        })
+    }catch(error){
+        if(!error.statusCode){
+            error.statusCode=500;
+        }
+        next(error);
+    }
+}
+
+exports.followUser = async (req,res,next)=>{
+    const followedId = req.params.userId;
+    const followerId = req.userId;
+    try{
+        let followedUser = await Users.findById(followedId);
+        const followerUser = await Users.findById(followerId);
+        if(!followedUser.followers.find(follower=>{return follower==followerId})){
+        followedUser.followers.push(followerId);
+        followerUser.following.push(followedId);
+        } 
+        await followedUser.save();
+        followedUser = await Users.findById(followedId).select("_id email username createdAt updatedAt profilePicture status followers following").populate("following followers", "_id email username createdAt updatedAt profilePicture status followers following");
+        await followerUser.save();
+        return res.json({
+            user: followedUser,
+            message: "Followed user!"
+        })
+    }catch(error){
+        if(!error.statusCode){
+            error.statusCode=500;
+        }
+        next(error);
+    }
+}
+
+exports.unfollowUser = async (req,res,next)=>{
+    const unfollowedId = req.params.userId;
+    const unfollowerId = req.userId;
+    try{
+        let unfollowedUser = await Users.findById(unfollowedId);
+        const unfollowerUser = await Users.findById(unfollowerId);
+        unfollowedUser.followers = unfollowedUser.followers.filter(follower=>follower!=unfollowerId);
+        unfollowerUser.following = unfollowerUser.following.filter(f=>{
+            return f!=unfollowedId});
+        await unfollowedUser.save();
+        unfollowedUser = await Users.findById(unfollowedId).select("_id email username createdAt updatedAt profilePicture status followers following").populate("following followers", "_id email username createdAt updatedAt profilePicture status followers following")
+        await unfollowerUser.save();
+        return res.json({
+            user: unfollowedUser,
+            message: "Unfollowed user!"
         })
     }catch(error){
         if(!error.statusCode){

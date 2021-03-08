@@ -33,7 +33,9 @@ const userModel = new Schema({
     profilePicture:{
         type: String,
         default: "/images/default.png"
-    }
+    },
+    followers: [{type: mongoose.Types.ObjectId, ref: "User"}],
+    following: [{type: mongoose.Types.ObjectId, ref: "User"}],
 })
 
 module.exports = mongoose.model("User", userModel);

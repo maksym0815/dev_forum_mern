@@ -3,8 +3,9 @@ import {useDispatch} from "react-redux";
 import * as actions from "../../store/actions/UI";
 import {useParams, withRouter} from "react-router-dom";
 import {isLoggedIn, updateLocalStorageData} from "../../api/auth";
-import {getProfile} from "../../api/user";
+import {getProfile, followUser, unfollowUser} from "../../api/user";
 import {Container, Button} from "../../components/UI/UI";
+import ProfileDetails from "../../components/ProfileDetails/ProfileDetails";
 import styles from "./Profile.module.scss";
 import {updateUser} from "../../api/user";
 
@@ -20,8 +21,11 @@ function Profile(props){
         createdAt: "",
         updatedAt: "",
         status: "",
-        profilePicture: ""
+        profilePicture: "",
+        followers: [],
+        following: []
     });
+
 
     const [images, setImages] = useState(null);
 
@@ -35,9 +39,9 @@ function Profile(props){
         status: ""
     })
 
+    const [isUserFollowed, setIsUserFollowed] = useState(false);
+
     const imageElement = useRef(null);
-    
-    console.log(userId)
 
     useEffect(()=>{
         dispatch(actions.startLoading());
@@ -51,9 +55,15 @@ function Profile(props){
                 return props.history.push("/login");
             }
             if(response.error){
-                dispatch(actions.startError("An unexpected error occured. Please try again."));
+                // localStorage.removeItem("user");
+                dispatch(actions.startError("An unexpected error occured. Please login and try again."));
                 dispatch(actions.endLoading());
-                return props.history.push("/"); 
+                return props.history.push("/");
+            }
+            if(response.user.followers.find(follower => follower._id == isLoggedIn()._id)){
+                setIsUserFollowed(true)
+            }else{
+                setIsUserFollowed(false)
             }
             setUser(response.user);
             dispatch(actions.endLoading());
@@ -129,10 +139,41 @@ function Profile(props){
         dispatch(actions.endLoading());
     }
 
+    const FollowHandler = (e)=>{
+        e.preventDefault();
+        dispatch(actions.startLoading());
+        followUser(user._id, isLoggedIn().token).then(response=>{
+            if(response.error){
+                dispatch(actions.endLoading());
+                return dispatch(actions.startError(response.message));
+            }
+            setIsUserFollowed(true);
+            setUser(response.user);
+            return dispatch(actions.startError("User followed successfully!"));
+        });
+        dispatch(actions.endLoading());
+    }
+
+    const UnfollowHandler = (e)=>{
+        e.preventDefault();
+        dispatch(actions.startLoading());
+        unfollowUser(user._id, isLoggedIn().token).then(response=>{
+            if(response.error){
+                dispatch(actions.endLoading());
+                return dispatch(actions.startError(response.message));
+            }
+            setIsUserFollowed(false);
+            setUser(response.user);
+            return dispatch(actions.startError("User unfollowed successfully!"));
+        });
+        dispatch(actions.endLoading());
+    }
+
     return (
         <main>
             <Container>
                 <div className={styles.Profile}>
+
                     <div className={styles.profileLeft}>
                         <div className={styles.profileLeftPicture}>
                             <img src={`${process.env.REACT_APP_URL}${user.profilePicture}`} alt={user.username}/>
@@ -148,18 +189,28 @@ function Profile(props){
                             {isLoggedIn() && isLoggedIn()._id==user._id && <p><span>Last profile change on:</span> {new Date(user.updatedAt).toLocaleDateString('en-US')}</p>}
                         </div>
                     </div>
+
                     <div className={styles.profileRight}>
+
                         {isLoggedIn() && isLoggedIn()._id==user._id && 
                         (<Button type="warning" click={()=>{
                             setEditProfile(!editProfile);
                             setUploadImage(false);
                             }}>EDIT PROFILE</Button>)}
+
+                        {isLoggedIn() && isLoggedIn()._id!=user._id && !isUserFollowed && 
+                        (<Button type="success" click={FollowHandler}>FOLLOW</Button>)}
+
+                        {isLoggedIn() && isLoggedIn()._id!=user._id && isUserFollowed && 
+                        (<Button type="warning" click={UnfollowHandler}>UNFOLLOW</Button>)}
+                            
                     </div>
+
                 </div>
                 <p className={styles.status}><span>Status:</span> {user.status}</p>
             </Container>
 
-            {uploadImage && isLoggedIn() && isLoggedIn()._id==user._id?(
+            {uploadImage && isLoggedIn()._id==user._id?(
             <Container>
                 <div className={styles.editImageForm}>
                     <form onSubmit={imageUploadHandler} onChange={()=>{
@@ -174,7 +225,7 @@ function Profile(props){
                 </div>
             </Container>):null}
 
-            {editProfile && isLoggedIn() && isLoggedIn()._id==user._id?(
+            {editProfile && isLoggedIn()._id==user._id &&(
             <Container>
                 <div className={styles.editForm}>
                     <form onSubmit={editProfileHandler} name="username">
@@ -190,7 +241,9 @@ function Profile(props){
                         <button type="submit">EDIT</button>
                     </form>
                 </div>
-            </Container>):null}
+            </Container>)}
+
+            <ProfileDetails user={user}/>
         </main>
            
     )

@@ -1,0 +1,64 @@
+@import "../../variables.scss";
+
+.ProfileDetails {
+}
+
+.topContainer {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  p {
+    width: 100%;
+    padding: 1.5rem;
+    text-align: center;
+    cursor: pointer;
+    font-weight: 600;
+    color: $black;
+    background: $white;
+    text-transform: uppercase;
+  }
+  .active {
+    background: $secondary;
+    color: $white;
+  }
+}
+
+.bottomContainer {
+  width: 100%;
+  min-height: 50vh;
+  background: $whitebg;
+  .followers {
+    display: flex;
+    flex-wrap: wrap;
+    p {
+      padding: 2.5rem;
+      text-align: center;
+      color: $grey;
+      width: 100%;
+      font-weight: 700;
+    }
+    .follower {
+      display: flex;
+      align-items: center;
+      min-width: 15rem;
+      margin: 2.5rem;
+      background: $white;
+      color: $black;
+      border: 1px solid $primary;
+      cursor: pointer;
+      img {
+        width: 70px;
+        height: 70px;
+        object-fit: cover;
+        pointer-events: none;
+      }
+      p {
+        padding: 0rem;
+        font-weight: 700;
+        margin: auto;
+        pointer-events: none;
+      }
+    }
+  }
+}
